@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Farkle, Bitches!</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" integrity="sha256-AIodEDkC8V/bHBkfyxzolUMw57jeQ9CauwhVW6YJ9CA=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="farkle">
+
+<div class="container-fluid" ng-controller="scoreController as ctrl">
+    <header class="margin-25">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline" ng-action="ctrl.addPlayer()">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" class="form-control" type="text" ng-model="ctrl.newPlayer" tabindex="-1">
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="ctrl.addPlayer()" tabindex="-1"><i class="fa fa-plus"></i> Add Player</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <div class="row">
+        <div ng-class="ctrl.colClass" ng-repeat="player in ctrl.players track by $index">
+            <div class="well well-small">
+
+                <div class="">
+                    <span class="pull-right">
+                        <a href="#" ng-click="ctrl.delPlayer($index)" tabindex="-1"><i class="fa fa-trash"></i> Delete</a>
+                    </span>
+                    <h1>{{ player.name }}</h1>
+                </div>
+
+                <h2>Score: {{ player.score }}</h2>
+
+                <div class="input-group margin-25">
+                    <input class="form-control" type="number" placeholder="Add Score" ng-model="ctrl.players[$index].newScore" on-enter="ctrl.addScore($index, score)" tabindex="0">
+                    <span class="input-group-btn">
+                      <button class="btn btn-success" ng-click="ctrl.addScore($index, score)" tabindex="-1"><i class="fa fa-plus"></i></button>
+                    </span>
+                </div>
+
+                <div class="quick-add margin-10">
+                    <button class="btn btn-default btn-sm" ng-click="ctrl.quickAdd($index, 1500)" tabindex="-1">3 Pairs</button>
+                    <button class="btn btn-default btn-sm" ng-click="ctrl.quickAdd($index, 1000)" tabindex="-1">4 of a Kind</button>
+                    <button class="btn btn-default btn-sm" ng-click="ctrl.quickAdd($index, 1500)" tabindex="-1">5 of a Kind</button>
+                    <button class="btn btn-default btn-sm" ng-click="ctrl.quickAdd($index, 2000)" tabindex="-1">6 of a Kind</button>
+                    <button class="btn btn-default btn-sm" ng-click="ctrl.quickAdd($index, 1500)" tabindex="-1">1-6 Straight</button>
+                    <button class="btn btn-default btn-sm" ng-click="ctrl.quickAdd($index, 1500)" tabindex="-1">2 Triplets</button>
+                </div>
+
+                <div class="margin-25">
+                    <h3>Previous Turns</h3>
+                    <div class="previous input-group" ng-repeat="prevScore in player.previous track by $index">
+                        <input class="form-control" ng-model="prevScore" tabindex="-1" disabled>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" ng-click="ctrl.removeScore(player, $index)" tabindex="-1"><i class="fa fa-trash"></i></button>
+                        </span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
