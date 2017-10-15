@@ -20,7 +20,7 @@
             var self = this;
             this.colClass = "col-md-12";
             this.players = [];
-            var maxPlayers = 4;
+            var maxPlayers = 6;
 
             function setColClass() {
                 if (self.players.length === 0) {
